@@ -1,0 +1,67 @@
+/** 
+ *  @author Andrea Ballatore <https://sites.google.com/site/andreaballatore>
+ *  @abstract CSS code for Context Frame app.
+ */
+
+
+body {
+   /*position: relative;
+   height: 100%;*/
+      
+   /* Margin bottom by footer height */
+   /* margin-bottom: 40px; */
+}
+
+#map_container {
+    position: fixed;
+    top: 50px;
+    bottom: 85px;
+    right: 0;
+    left: 0;
+    vertical-align: top;
+}
+
+#map { min-height: 300px; }
+
+h1 {
+	color: #006600;
+}
+
+#map_console {
+	padding: .5em; font-size: small;
+	/*
+	background-color: #eeeeee; 
+	*/
+}
+
+.distance_info {
+	color: 'red';
+	font-size: big;
+}
+
+.cities {
+	color: #006600 !important;
+}
+
+.countries {
+	color: #0066cc !important;	
+}
+
+.leaflet-tooltip {
+	padding: 3px !important;
+	padding-bottom: 1px !important;
+	padding-top: 1px !important;
+	cursor: pointer;	
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  color: white;
+  line-height: 40px; /* Vertically center the text there */
+  background-color: black;
+}
