@@ -38,7 +38,7 @@ MAX_LABEL_CHARS = 15;
 // Higher values will increase the query area.
 EXPANSION_FACTOR = 1.4;
 // Cities will be shown at zoom levels >= than this.
-MIN_ZOOM_CITIES = 6; // 16;
+MIN_ZOOM_CITIES = 8; // 16;
 // Minimum distance between labels on screen. Prevents label collisions.
 MIN_PIXEL_DISTANCE = 110;
 
