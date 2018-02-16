@@ -23,8 +23,10 @@ MIN_ZOOM = 3;
 MAX_ZOOM = 18;
 // default zoom level in the map
 DEFAULT_ZOOM = 7;
-// ratio to calculate space to place labels in the frame
-LABEL_PAD = -0.07;
+// Offsets of context frame in pixels, to calculate space to place labels in the frame
+LABEL_PAD_PX_X = 70; // left and right borders
+LABEL_PAD_PX_Y = 27; // top and bottom borders
+
 // maximum number of labels to be displayed on the map
 MAX_LABELS = 12;
 // filter labels that are closer than this threshold.
@@ -36,12 +38,13 @@ MAX_LABEL_CHARS = 15;
 // Higher values will increase the query area.
 EXPANSION_FACTOR = 1.4;
 // Cities will be shown at zoom levels >= than this.
-MIN_ZOOM_CITIES = 7; // 16;
+MIN_ZOOM_CITIES = 6; // 16;
 // Minimum distance between labels on screen. Prevents label collisions.
 MIN_PIXEL_DISTANCE = 110;
+
 // Weights to determine order/priority of labels.
 // sum should be 100.
-SORT_DISTANCE_WEIGHT = 100; // weight of distance
-SORT_PARAM1_WEIGHT = 0; // weight of property (population, area, etc.)
+SORT_DISTANCE_WEIGHT = 80; // weight of feature distance to the current map
+SORT_PARAM1_WEIGHT = 20; // weight of feature property (population, area, etc.)
 
 // end

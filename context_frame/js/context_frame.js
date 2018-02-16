@@ -126,6 +126,8 @@ function initApp(){
 		addOverviewMap();
 	}
 	addSearchBarNominatim();
+	
+	initBootleaf();
 
 	initContextFrame();
 
@@ -328,6 +330,54 @@ function showCfInfo(zoom,n_feat){
 }
 
 /**
+ * Set up page elements (based on Bootleaf)
+ */
+function initBootleaf(){
+
+	$(window).resize(function() {
+	  sizeLayerControl();
+	});
+
+	$("#about-btn").click(function() {
+	  $("#aboutModal").modal("show");
+	  $(".navbar-collapse.in").collapse("hide");
+	  return false;
+	});
+
+	$("#full-extent-btn").click(function() {
+	  map.fitBounds(boroughs.getBounds());
+	  $(".navbar-collapse.in").collapse("hide");
+	  return false;
+	});
+	
+	$("#random-place-btn").click(function() {
+	  goRandomPlace();
+	  $(".navbar-collapse.in").collapse("hide");
+	  return false;
+	});
+
+	$("#legend-btn").click(function() {
+	  $("#legendModal").modal("show");
+	  $(".navbar-collapse.in").collapse("hide");
+	  return false;
+	});
+
+	$("#nav-btn").click(function() {
+	  $(".navbar-collapse").collapse("toggle");
+	  return false;
+	});
+
+	function sizeLayerControl() {
+		console.debug("sizeLayerControl");
+		$(".leaflet-control-layers").css("max-height", $("#map").height() - 150);
+	}
+	
+	// show footer
+	$("#website_footer").show();
+
+}
+
+/**
  * Remove all labels from context frame.
  */
 function clearLabels(){
@@ -343,6 +393,28 @@ function showInMapConsole(htmlCode){
 }
 
 /**
+ * Calculate frame bounds in Lat/Lon coords, based on LABEL_PAD_PX_X and LABEL_PAD_PX_Y
+ */
+function calcMapFrameBounds(bounds){
+	//var new_bounds = bounds.pad(LABEL_PAD);
+	//console.error(bounds);
+	// get screen coords
+	var nePt = map.latLngToLayerPoint(bounds.getNorthEast());
+	var swPt = map.latLngToLayerPoint(bounds.getSouthWest());
+	nePt.x = nePt.x - LABEL_PAD_PX_X;
+	nePt.y = nePt.y + LABEL_PAD_PX_Y;
+	swPt.x = swPt.x + LABEL_PAD_PX_X;
+	swPt.y = swPt.y - LABEL_PAD_PX_Y;
+	var neLL = map.layerPointToLatLng(nePt);
+	var swLL = map.layerPointToLatLng(swPt);
+	var new_bounds = L.latLngBounds(swLL,neLL);
+	//console.error(new_bounds);
+	// map.layerPointToLatLng
+	assert(bounds.contains(new_bounds),'calcMapFrameBounds: Incorrect bounds!');
+	return new_bounds;
+}
+
+/**
  * Core function of context frame.
  * Generates labels from all candidates features, for a given bounding box and zoom level
  * (and type of features).
@@ -351,7 +423,7 @@ function showInMapConsole(htmlCode){
 function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 	console.info('generateLabelsFromFeatures');
 	clearLabels();
-	bounds = bounds.pad(LABEL_PAD); // reduce bounds for labels
+	bounds = calcMapFrameBounds( bounds ); // reduce bounds for labels
 	var centerPt = turf.point([bounds.getCenter().lng, bounds.getCenter().lat]);
 	var bbox = boundsToTurfBbox(bounds);
 	//console.debug(features);

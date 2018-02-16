@@ -64,4 +64,5 @@ h1 {
   color: white;
   line-height: 40px; /* Vertically center the text there */
   background-color: black;
+  font-size: 12px;
 }
