@@ -28,7 +28,7 @@ LABEL_PAD_PX_X = 70; // left and right borders
 LABEL_PAD_PX_Y = 27; // top and bottom borders
 
 // maximum number of labels to be displayed on the map
-MAX_LABELS = 12;
+MAX_LABELS = 15;
 // filter labels that are closer than this threshold.
 // if SHOW_MIN_DIST_KM == 0, show labels about objects that are visibile in the map.
 SHOW_MIN_DIST_KM = 10;
