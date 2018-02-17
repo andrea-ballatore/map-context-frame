@@ -462,6 +462,13 @@ function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 	var tooltips_on_screen = [];
 	
 	var occupied_screen_coords = []; // keep track of screen slots to place labels
+	
+	// top left corner as occupied, to avoid collision with map controls
+	var topLeftPt = map.latLngToLayerPoint(map.getBounds().getNorthWest());
+	occupied_screen_coords.push(topLeftPt);
+	var topRightPt = map.latLngToLayerPoint(map.getBounds().getNorthEast());
+	occupied_screen_coords.push(topRightPt);
+	
 	//console.info(all_intersections);
 	var curRank = 0
 	for(i in all_intersections){
@@ -471,7 +478,7 @@ function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 		if (inters.properties.distKm >= SHOW_MIN_DIST_KM && n_labels < MAX_LABELS){
 			labLon = inters.geometry.coordinates[0];
 			labLat = inters.geometry.coordinates[1];
-			labelScreenPt = map.latLngToLayerPoint(L.latLng(labLat, labLon));
+			var labelScreenPt = map.latLngToLayerPoint(L.latLng(labLat, labLon));
 			//console.debug("rank="+inters.properties.rank+" "+inters.properties.featName);
 			//console.debug(inters.properties);
 			if (hasCollision( labelScreenPt, occupied_screen_coords )){
@@ -486,6 +493,7 @@ function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 			var tooltip = createLabel(lab, labLon, labLat, inters.properties.fCentroid, inters.properties.distKm );
 			
 			occupied_screen_coords.push(labelScreenPt);
+			
 			if (inters.properties.distKm > 0){
 				createDirectionLine( turf.point([labLon,labLat]), inters.properties.fCentroid, labelClass );
 			}

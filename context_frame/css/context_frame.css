@@ -21,7 +21,7 @@ body {
     vertical-align: top;
 }
 
-#map { min-height: 300px; }
+#map { min-height: 100px; }
 
 h1 {
 	color: #006600;
@@ -85,3 +85,9 @@ h1 {
   background-color: black;
   font-size: 12px;
 }
+
+.leaflet-control-search, .search-button, .leaflet-control-zoom-in, .leaflet-control-zoom-out, 
+	.leaflet-control-layers-toggle, .leaflet-control-layers, .leaflet-control-layers-base {
+	opacity: 0.7;
+}
+
