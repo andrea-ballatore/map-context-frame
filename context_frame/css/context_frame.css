@@ -51,8 +51,27 @@ h1 {
 	padding: 3px !important;
 	padding-bottom: 1px !important;
 	padding-top: 1px !important;
-	cursor: pointer;	
+	cursor: pointer;
 }
+
+/* Class for important labels */
+.label_heavier_cities {
+	font-weight: bolder;
+	color: white !important;
+	background-color: #006600;
+}
+
+.distancekm {
+	color: #999; 
+	font-size: smaller;
+}
+
+.label_heavier_countries {
+	font-weight: bolder;
+	color: white !important;
+	background-color: #0066cc;
+}
+
 
 .footer {
   position: absolute;

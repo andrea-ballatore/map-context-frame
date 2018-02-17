@@ -427,16 +427,16 @@ function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 	var centerPt = turf.point([bounds.getCenter().lng, bounds.getCenter().lat]);
 	var bbox = boundsToTurfBbox(bounds);
 	//console.debug(features);
-	all_intersections = [];
+	var all_intersections = [];
 	for(i in features){
-		currentFeature = features[i];
-		fBbox = featureToTurfBbox(currentFeature);
-		fCentroid = turf.centroid(currentFeature.geometry);
+		var currentFeature = features[i];
+		var fBbox = featureToTurfBbox(currentFeature);
+		var fCentroid = turf.centroid(currentFeature.geometry);
 		// calculate label location
 		//console.debug(fCentroid.geometry);
 		// trace line between map center and feature centroid
-		line = turf.lineString([ fCentroid.geometry.coordinates, centerPt.geometry.coordinates]);
-		inters = lineIntersect(line, bbox); //currentFeature.geometry)
+		var line = turf.lineString([ fCentroid.geometry.coordinates, centerPt.geometry.coordinates]);
+		var inters = lineIntersect(line, bbox); //currentFeature.geometry)
 		if (inters.features.length>0){
 			turf.featureEach(inters, function (curIntersection, intersIndex) {
 				// check if feature is contained within current map bbox
@@ -458,11 +458,16 @@ function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 
 	// sort labels
 	all_intersections = sortCandidateLabels(all_intersections, labelClass);
-
-	occupied_screen_coords = []; // keep track of screen slots to place labels
+	
+	var tooltips_on_screen = [];
+	
+	var occupied_screen_coords = []; // keep track of screen slots to place labels
 	//console.info(all_intersections);
+	var curRank = 0
 	for(i in all_intersections){
 		inters = all_intersections[i];
+		assert( inters.properties.rank >= curRank, "incorrect order!" );
+		curRank = inters.properties.rank;
 		if (inters.properties.distKm >= SHOW_MIN_DIST_KM && n_labels < MAX_LABELS){
 			labLon = inters.geometry.coordinates[0];
 			labLat = inters.geometry.coordinates[1];
@@ -473,17 +478,39 @@ function generateLabelsFromFeatures(features, bounds, zoom, labelClass){
 				//console.debug("  Label collision, skipping.");
 				continue;
 			}
-			lab = styleText( inters.properties.featName, labelClass )+
-					" <span style=\"color: gray; font-size: smaller;\">"+roundToN(inters.properties.distKm,10)+"km</span>";
-			createLabel(lab, labLon, labLat, inters.properties.fCentroid);
+			// relate style to ranking
+			lab = styleText( inters.properties.featName, labelClass ) +
+					" <span class=\"distancekm\">"+roundToN(inters.properties.distKm,10)+"km</span>";
+			
+			// create new label
+			var tooltip = createLabel(lab, labLon, labLat, inters.properties.fCentroid, inters.properties.distKm );
+			
 			occupied_screen_coords.push(labelScreenPt);
-			if (inters.properties.distKm > 0)
+			if (inters.properties.distKm > 0){
 				createDirectionLine( turf.point([labLon,labLat]), inters.properties.fCentroid, labelClass );
+			}
+			tooltips_on_screen.push(tooltip);
 		} else {
 			//console.debug("Object too close or too many objects:")
 			//console.debug(inters.properties);
 		}
 	}
+	updateLabelsStyle(tooltips_on_screen,labelClass);
+	
+}
+
+function updateLabelsStyle( tooltips, labelClass ){
+	if (tooltips.length < 1) return;
+	
+	for (i in tooltips){
+		tooltips[i].classList.add(labelClass);
+	}
+	
+	// change styles of labels
+	tooltips.sort(function(a, b){ return a.getAttribute('data-distancekm') - b.getAttribute('data-distancekm') });
+	
+	// make some labels more prominent
+	//tooltips[0].classList.add("label_heavier_"+labelClass);
 }
 
 /**
@@ -573,7 +600,8 @@ function hasCollision( scrnPt, occupied_screen_coords ){
  * Style some text with a given CSS class. Returns HTML.
  */
 function styleText( text, cssClass ){
-	html = "<span class=\""+cssClass+"\">"+text+"</span>";
+	var extraClass = '';
+	var html = "<span class=\"\" "+extraClass+"\">"+text+"</span>";
 	return(html)
 }
 
@@ -645,7 +673,7 @@ function addSearchBarNominatim(){
  * Create a label to be placed on the map at a given location with a given text.
  * It is a L.tooltip object.
  */
-function createLabel( text, locationLon, locationLat, targetCoords ){
+function createLabel( text, locationLon, locationLat, targetCoords, distKm ){
 	var tooltip = L.tooltip({
 		direction: 'center',
 		permanent: true,
@@ -653,7 +681,7 @@ function createLabel( text, locationLon, locationLat, targetCoords ){
 		noWrap: true,
 		opacity: .95
 	});
-	tooltip.setContent( text  );
+	tooltip.setContent( text );
 	tooltip.setLatLng(new L.LatLng(locationLat, locationLon));
 	// add to map
 	tooltip.addTo(contextFrameLayer);
@@ -661,6 +689,7 @@ function createLabel( text, locationLon, locationLat, targetCoords ){
 	var el = tooltip.getElement();
 	// set id
 	el.id = "cf_label_"+n_labels;
+	// make label clickable, pan to destination
 	el.addEventListener('click', function(event) {
 	    var lat = this.getAttribute('data-targetlat');
 	    var lon = this.getAttribute('data-targetlon');
@@ -669,9 +698,11 @@ function createLabel( text, locationLon, locationLat, targetCoords ){
 	// store lat/lon data for click event
 	el.setAttribute('data-targetlon', targetCoords.geometry.coordinates[0]);
 	el.setAttribute('data-targetlat', targetCoords.geometry.coordinates[1]);
+	el.setAttribute('data-distancekm', distKm);
 	el.style.pointerEvents = 'auto'; // important to enable click handler
 	// increase counter
 	n_labels += 1;
+	return(el);
 }
 
 /**
