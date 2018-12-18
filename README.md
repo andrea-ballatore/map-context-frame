@@ -16,4 +16,4 @@ https://andrea-ballatore.github.io/map-context-frame
 
 ### Author:
 
-[Andrea Ballatore](https://sites.google.com/site/andreaballatore/) © Birkbeck, University of London, 2018
+[Andrea Ballatore](https://aballatore.space) © Birkbeck, University of London, 2019
