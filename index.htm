@@ -26,11 +26,11 @@
     <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon-152.png">
     <link rel="icon" sizes="196x196" href="assets/img/favicon-196.png">
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    
+
     <!-- Import datasets -->
 	<script src='context_frame/datasets/simplemaps-worldcities-basic-20K.geojson.js' type="text/javascript"></script>
 	<script src='context_frame/datasets/countries.geojson.js' type="text/javascript"></script>
-    
+
   </head>
 
   <body>
@@ -43,11 +43,11 @@
           <a class="navbar-brand" href="#">Map Context Frame &#128506;</a>
         </div>
         <div class="navbar-collapse collapse">
-          
+
           <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-info-circle white"></i>&nbsp;&nbsp;About</a></li>
             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="random-place-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;Random place</a></li>
-            <!-- 
+            <!--
             <li class="dropdown">
               <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -59,7 +59,7 @@
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-	 
+
     <div id="map_container">
 		<div id="map"></div>
     	<div id="map_console"></div>
@@ -83,20 +83,20 @@
 			</p>
 			<p><b>Author and contact</b>: <a href="https://sites.google.com/site/andreaballatore">Andrea Ballatore</a>, andrea [dot] ballatore [at] gmail [dot] com
 			</p>
-			<p><b>How to cite</b>: A. Ballatore (2018) Map Context Frame (TBC) 
+			<p><b>How to cite</b>: A. Ballatore (2019) A Context Frame for Interactive Maps, AGILE Conference on Geographical Information Science, Short papers <a href="https://github.com/andrea-ballatore/map-context-frame/raw/master/publications/Ballatore-2019-AGILE-A_Context_Frame_for_Maps.pdf">[PDF]</a>
 			</p>
-			<p><b>GitHub repo</b>: <a href="http://github.com/andrea-ballatore/map-context-frame">github.com/andrea-ballatore/map-context-frame</a>   
+			<p><b>GitHub repo</b>: <a href="http://github.com/andrea-ballatore/map-context-frame">github.com/andrea-ballatore/map-context-frame</a>
 			</p>
-			<p><b>Acknowledgements</b>: This prototype relies on a variety of open-source tools and datasets. 
-			The base maps are by ESRI and OpenStreetMap. The web mapping is powered by <a href="leafletjs.com">Leaflet</a> and plugins (<a href="https://github.com/areichman/leaflet-overview">leaflet-overview</a> and <a href="https://github.com/stefanocudini/leaflet-search">leaflet-search</a>). 
-			The spatial computing is delegated to <a href="http://turfjs.org/">Turf</a>, while 
+			<p><b>Acknowledgements</b>: This prototype relies on a variety of open-source tools and datasets.
+			The base maps are by ESRI and OpenStreetMap. The web mapping is powered by <a href="leafletjs.com">Leaflet</a> and plugins (<a href="https://github.com/areichman/leaflet-overview">leaflet-overview</a> and <a href="https://github.com/stefanocudini/leaflet-search">leaflet-search</a>).
+			The spatial computing is delegated to <a href="http://turfjs.org/">Turf</a>, while
 			the website template is based on <a href="https://github.com/bmcbride/bootleaf">BootLeaf</a>.
-			The cities dataset <i>simplemaps-worldcities-basic-20K.geojson</i> is from <a href="https://simplemaps.com/data/world-cities">SimpleMaps</a>, and 
+			The cities dataset <i>simplemaps-worldcities-basic-20K.geojson</i> is from <a href="https://simplemaps.com/data/world-cities">SimpleMaps</a>, and
 			 and the country boundaries <i>countries.geojson</i> are from <a href="https://github.com/johan/world.geo.json">world.geo.json</a>.
 			</p>
-			
+
           </div><!-- end of ABOUT -->
-          
+
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
@@ -151,7 +151,7 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    
+
     <footer class="footer" id="website_footer" style="display: none;">
       <div class="container">
         <span class="text-muted">
@@ -159,10 +159,10 @@
         </span>
       </div>
     </footer>
-    
+
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!-- 
+    <!--
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
@@ -170,7 +170,7 @@
     <!-- import LEAFLET -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-    
+
     <!-- Load libraries for Context Frame -->
     <link rel="stylesheet" href="context_frame/leaflet-overview/leaflet-overview.css" />
 	<script src="context_frame/leaflet-overview/leaflet-overview.js" type="text/javascript"></script>
@@ -180,10 +180,10 @@
 	<!-- Import Turf spatial analytics library -->
 	<script src='context_frame/turf-js/turf.min.js' type="text/javascript"></script>
 
-	
+
     <!-- Load libraries for Context frame-->
     <script src="context_frame/leaflet-overview/leaflet-overview.js"></script>
-    
+
     <!-- Load Context frame -->
     <link href="context_frame/css/context_frame.css" rel="stylesheet" />
     <script src="context_frame/js/context_frame_settings.js"></script>
