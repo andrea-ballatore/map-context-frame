@@ -10,7 +10,7 @@ Digital maps are ubiquitous, supporting countless online activities. Most intera
 
 
 ### Publications:
-* A. Ballatore (2019) A Context Frame for Interactive Maps, AGILE Conference on Geographical Information Science, Short papers [PDF]
+A. Ballatore (2019) A Context Frame for Interactive Maps, AGILE Conference on Geographical Information Science, Short papers [PDF](https://github.com/andrea-ballatore/map-context-frame/raw/master/publications/Ballatore-2019-AGILE-A_Context_Frame_for_Maps.pdf)
 
 ### Based on:
 [Bootstrap](http://getbootstrap.com/), [Leaflet](http://leafletjs.com/), and [typeahead.js](http://twitter.github.io/typeahead.js/).
